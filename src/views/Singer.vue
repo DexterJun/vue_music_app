@@ -1,15 +1,34 @@
 <template>
-  <div class="singer">
-    歌手页面
+  <div class="singer" v-loading="!singers.length">
+    <IndexList :data="singers"></IndexList>
   </div>
 </template>
 
 <script>
+import { getSingerList } from '../service/singer'
+import IndexList from '../components/base/indexList/IndexList.vue'
+
 export default {
-  name: 'singer'
+  name: 'singer',
+  components: { IndexList },
+  data() {
+    return {
+      singers: []
+    }
+  },
+  async created() {
+    const result = await getSingerList()
+    console.log(result)
+    this.singers = result.singers
+  }
 }
 </script>
 
 <style lang='scss' scoped>
-
+  .singer {
+    position: fixed;
+    width: 100%;
+    top: 88px;
+    bottom: 0;
+  }
 </style>
