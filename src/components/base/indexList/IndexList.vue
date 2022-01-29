@@ -1,10 +1,12 @@
+/* 歌手列表页面 */
 <template>
   <Scroll class="index-list" :probeType="3" @scroll="onScroll" ref="scrollRef">
+    <!-- 歌手列表展示 -->
     <ul ref="groupRef">
       <li class="group" v-for="group in data" :key="group.title">
         <h2 class="title">{{group.title}}</h2>
         <ul>
-          <li class="item" v-for="item in group.list" :key="item.id">
+          <li class="item" v-for="item in group.list" :key="item.id" @click="onItemClick(item)">
             <img class="avatar" v-lazy="item.pic">
             <span class="name">{{item.name}}</span>
           </li>
@@ -43,6 +45,7 @@ import useShortcut from './useShortcut'
 export default {
   name: 'IndexList',
   components: { Scroll },
+  emits: ['select'],
   props: {
     data: {
       type: Array,
@@ -51,10 +54,20 @@ export default {
       }
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props)
     console.log(fixedTitle)
-    const { shortcutList, onShortcutTouchStart, onShortcutTouchMove, scrollRef } = useShortcut(props, groupRef)
+    const {
+      shortcutList,
+      onShortcutTouchStart,
+      onShortcutTouchMove,
+      scrollRef
+    } = useShortcut(props, groupRef)
+    function onItemClick(item) {
+      // 点击某一个歌手时触发自定义事件，将该歌手信息传递出去
+      emit('select', item)
+    }
+
     return {
       groupRef,
       onScroll,
@@ -64,7 +77,8 @@ export default {
       currentIndex,
       onShortcutTouchStart,
       onShortcutTouchMove,
-      scrollRef
+      scrollRef,
+      onItemClick
     }
   }
 }
