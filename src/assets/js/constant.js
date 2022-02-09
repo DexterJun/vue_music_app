@@ -1,5 +1,7 @@
-// 在浏览器中存储的歌手session
+// 在浏览器中存储的歌手session key
 export const SINGER_KEY = '__singer__'
+// 在浏览器中存储收藏列表的local key
+export const FAVORITE_KEY = '__favorite__'
 
 // 歌曲播放模式
 export const PLAY_MODE = {

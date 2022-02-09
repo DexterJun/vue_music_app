@@ -2,10 +2,10 @@ const mutations = {
   setPlayingState(state, playing) {
     state.playing = playing
   },
-  setSquenceList(state, list) {
+  setSequenceList(state, list) {
     state.sequenceList = list
   },
-  setPlsyList(state, list) {
+  setPlayList(state, list) {
     state.playList = list
   },
   setPlayMode(state, mode) {
@@ -16,6 +16,17 @@ const mutations = {
   },
   setFullScreen(state, fullScreen) {
     state.fullScreen = fullScreen
+  },
+  setFavoriteList(state, list) {
+    state.favoriteList = list
+  },
+  addSongLyric(state, { song, lyric }) {
+    state.sequenceList.map((item) => {
+      if (item.mid === song.mid) { // 为歌曲对象添加歌词项
+        item.lyric = lyric
+      }
+      return item
+    })
   }
 }
 

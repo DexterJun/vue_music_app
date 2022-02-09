@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import Scroll from '../base/scroll/Scroll.vue'
+import Scroll from '../wrapScroll/index'
 import SongList from '../base/songList/SongList.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 const RESERVED_HEIGHT = 40 // 定义常量表示标题的高度
 
@@ -104,8 +104,9 @@ export default {
       }
     },
     scrollStyle() {
+      const bottom = this.playList.length ? '60px' : '0' // 使歌曲列表底部留出迷你播放器宽度的边距
       // 通过获取相应歌手照片的高度，来动态设置歌曲列表内容区的top值
-      return { top: `${this.imageHeight}px` }
+      return { top: `${this.imageHeight}px`, bottom }
     },
     filterStyle() {
       let blur = 0
@@ -115,7 +116,8 @@ export default {
         blur = Math.min(this.maxTranslateY / imageHeight, scrollY / imageHeight) * 20
       }
       return { backdropFilter: `blur(${blur}px)` }
-    }
+    },
+    ...mapState(['playList'])
   },
   mounted() {
     this.imageHeight = this.$refs.bgImage.clientHeight

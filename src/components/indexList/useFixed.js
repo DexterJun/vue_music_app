@@ -56,7 +56,6 @@ export default function useFixed(props) {
   }
 
   function onScroll(pos) {
-    console.log(pos)
     /* 当往上滚动时pos的值是负值，当往下滚动时pos的值为正值 */
     scrollY.value = -pos.y
   }

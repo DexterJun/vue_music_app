@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import Scroll from '../scroll/Scroll.vue'
+import Scroll from '../wrapScroll/index'
 import useFixed from './useFixed'
 import useShortcut from './useShortcut'
 
@@ -56,7 +56,6 @@ export default {
   },
   setup(props, { emit }) {
     const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props)
-    console.log(fixedTitle)
     const {
       shortcutList,
       onShortcutTouchStart,

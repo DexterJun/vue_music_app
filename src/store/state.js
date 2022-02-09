@@ -1,4 +1,5 @@
-import { PLAY_MODE } from '../assets/js/constant'
+import { PLAY_MODE, FAVORITE_KEY } from '../assets/js/constant'
+import { load } from '../assets/js/arrayStore'
 
 const state = {
   sequenceList: [], // 歌曲顺序列表
@@ -6,7 +7,8 @@ const state = {
   playing: false, // 标记是否正在播放
   playMode: PLAY_MODE.sequence, // 默认顺序播放
   currentIndex: 0, // 当前正在播放的歌曲索引
-  fullScreen: false // 播放器状态是否全屏
+  fullScreen: false, // 播放器状态是否全屏
+  favoriteList: load(FAVORITE_KEY) // 收藏歌曲列表
 }
 
 export default state
