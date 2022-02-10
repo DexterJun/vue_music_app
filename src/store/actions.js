@@ -74,3 +74,25 @@ export function clearSongList({ commit }) {
   commit('setCurrentIndex', 0)
   commit('setPlayingState', false)
 }
+
+export function addSong({ commit, state }, song) {
+  const playList = state.playList.slice()
+  const sequenceList = state.sequenceList.slice()
+  let currentIndex = state.currentIndex
+  const playIndex = findIndex(playList, song)
+  if (playIndex > -1) { // 如果播放列表中有当前歌曲则直接播放
+    currentIndex = playIndex
+  } else { // 如果播放列表中没有该歌曲则加入播放列表并播放
+    playList.push(song)
+    currentIndex = playList.length - 1
+  }
+  const sequenceIndex = findIndex(sequenceList, song)
+  if (sequenceIndex === -1) {
+    sequenceList.push(song)
+  }
+  commit('setSequenceList', sequenceList)
+  commit('setPlayList', playList)
+  commit('setCurrentIndex', currentIndex)
+  commit('setPlayingState', true)
+  commit('setFullScreen', true)
+}

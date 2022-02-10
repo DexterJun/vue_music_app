@@ -16,7 +16,7 @@ export function processSongs(songs) {
       song.url = map[song.mid]
       return song
     }).filter((song) => { // 当vkey的值小于-1时表示该歌曲不可以播放，则过滤掉
-      return song.url.indexOf('vkey') > -1
+      return song.url && song.url.indexOf('vkey') > -1
     })
   })
 }
