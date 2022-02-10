@@ -15,7 +15,7 @@
         <div class="recommend-list">
           <h1 class="list-title" v-show="!loading">热门歌单推荐</h1>
           <ul>
-            <li class="item" v-for="item in albums" :key="item.id">
+            <li class="item" v-for="item in albums" :key="item.id" @click="selectItem(item)">
               <div class="icon">
                 <img v-lazy="item.pic" width="60" height="60">
               </div>
@@ -29,12 +29,20 @@
       </div>
     </Scroll>
   </div>
+  <!-- 路由跳转时加载左右滑动的动画效果 -->
+    <router-view v-slot="{ Component }">
+      <transition appear name="slide">
+        <component :is="Component" :data="selectedAlbum"></component>
+      </transition>
+    </router-view>
 </template>
 
 <script>
 import { getRecommend } from '../service/recommend'
 import Slider from '../components/base/slider/Slider.vue'
 import Scroll from '../components/wrapScroll/index'
+import { ALBUM_KEY } from '../assets/js/constant'
+import storage from 'good-storage'
 
 export default {
   name: 'recommend',
@@ -43,7 +51,8 @@ export default {
     return {
       sliders: [],
       albums: [],
-      loadingText: '正在加载中'
+      loadingText: '正在加载中',
+      selectedAlbum: null
     }
   },
   computed: {
@@ -55,6 +64,18 @@ export default {
     const result = await getRecommend()
     this.sliders = result.sliders
     this.albums = result.albums
+  },
+  methods: {
+    selectItem(album) {
+      this.selectedAlbum = album
+      this.cacheAlbum(album)
+      this.$router.push({
+        path: `/recommend/${album.id}`
+      })
+    },
+    cacheAlbum(album) {
+      storage.session.set(ALBUM_KEY, album)
+    }
   }
 }
 </script>

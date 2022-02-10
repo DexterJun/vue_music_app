@@ -5,7 +5,7 @@
     <!-- 路由跳转时加载左右滑动的动画效果 -->
     <router-view v-slot="{ Component }">
       <transition appear name="slide">
-        <component :is="Component" :singer="selectedSinger"></component>
+        <component :is="Component" :data="selectedSinger"></component>
       </transition>
     </router-view>
   </div>
