@@ -2,8 +2,13 @@ import storage from 'good-storage'
 
 function insertArray(arr, val, compare, maxlen) {
   const index = arr.findIndex(compare)
-  if (index > -1) {
+  // 如果选中歌曲在播放列表的最前面则不作操作
+  if (index === 0) {
     return
+  }
+  // 如果选中歌曲在播放列表中但是不在最前面，则删除它再将其添加到列表最前面
+  if (index > 0) {
+    arr.splice(index, 1)
   }
   arr.unshift(val)
   if (maxlen && arr.length > maxlen) {
@@ -43,4 +48,9 @@ export function load(key) {
 export function clear(key) {
   storage.remove(key)
   return []
+}
+
+// 保存所有数据
+export function saveAll(items, key) {
+  storage.set(key, items)
 }

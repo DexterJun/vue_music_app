@@ -134,6 +134,7 @@ import useCd from './useCd'
 import useLyric from './useLyric'
 import useInteractive from './useInteractive'
 import useAnimation from './useAnimation'
+import usePlayHistory from './usePlayHistory'
 import { formatTime } from '../../assets/js/util'
 import { PLAY_MODE } from '../../assets/js/constant'
 import ProgressBar from './ProgressBar.vue'
@@ -183,8 +184,8 @@ export default {
       onMiddleTouchMove,
       onMiddleTouchEnd
     } = useInteractive()
-
     const { cdWrapperRef, enter, afterEnter, leave, afterLeave } = useAnimation()
+    const { savePlay } = usePlayHistory()
 
     const playIcon = computed(() => { // 播放和暂停图标的切换
       return playing.value ? 'icon-pause' : 'icon-play'
@@ -299,6 +300,7 @@ export default {
       }
       songReady.value = true
       playLyric()
+      savePlay(currentSong.value) // 保存当前歌曲到播放历史中
     }
 
     // 当播放出错时使操作按钮可选

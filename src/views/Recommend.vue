@@ -30,11 +30,11 @@
     </Scroll>
   </div>
   <!-- 路由跳转时加载左右滑动的动画效果 -->
-    <router-view v-slot="{ Component }">
-      <transition appear name="slide">
-        <component :is="Component" :data="selectedAlbum"></component>
-      </transition>
-    </router-view>
+  <router-view v-slot="{ Component }">
+    <transition appear name="slide">
+      <component :is="Component" :data="selectedAlbum"></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>

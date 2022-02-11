@@ -2,6 +2,12 @@
   <m-header></m-header>
   <Tab></Tab>
   <router-view :style="viewStyle"></router-view>
+  <!-- 为用户中心路由跳转添加专属滑动效果 -->
+  <router-view v-slot="{ Component }" :style="viewStyle" name="user">
+    <transition appear name="slide">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
   <Player></Player>
 </template>
 
