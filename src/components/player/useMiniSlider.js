@@ -1,5 +1,5 @@
 // 控制迷你播放器左右切歌的钩子
-import { ref, onMounted, nextTick, onUnmounted, computed, watch } from 'vue'
+import { ref, onMounted, nextTick, onUnmounted, computed, watch, onActivated, onDeactivated } from 'vue'
 import { useStore } from 'vuex'
 import BScroll from '@better-scroll/core'
 import Slide from '@better-scroll/slide'
@@ -63,6 +63,13 @@ export default function useMiniSlider() {
     if (slider.value) {
       slider.value.destroy()
     }
+  })
+  onActivated(() => {
+    slider.value.enable()
+    slider.value.refresh()
+  })
+  onDeactivated(() => {
+    slider.value.disable()
   })
 
   return {

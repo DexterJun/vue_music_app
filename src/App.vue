@@ -1,11 +1,17 @@
 <template>
   <m-header></m-header>
   <Tab></Tab>
-  <router-view :style="viewStyle"></router-view>
+  <router-view :style="viewStyle" v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component"></component>
+    </keep-alive>
+  </router-view>
   <!-- 为用户中心路由跳转添加专属滑动效果 -->
   <router-view v-slot="{ Component }" :style="viewStyle" name="user">
     <transition appear name="slide">
-      <component :is="Component"></component>
+      <keep-alive>
+        <component :is="Component"></component>
+      </keep-alive>
     </transition>
   </router-view>
   <Player></Player>
